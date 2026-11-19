@@ -1,0 +1,394 @@
+{
+  "build_now": "Choose the smallest useful set of features from the user's scope that delivers the fastest aha moment through a complete core workflow, honoring explicit user priorities.",
+  "app_meta": {
+    "name": "RestoHRIS Multi-Cabang",
+    "tagline": "Sistem HRIS & Operasional Terpadu Restoran Multi-Cabang (El Pico, Pahlawan Trip)",
+    "type": "saas_app / dashboard, mobile-first",
+    "locale": {
+      "language": "id-ID",
+      "timezone": "Asia/Jakarta (WIB, UTC+7)",
+      "currency": "IDR (Rp)",
+      "number_format": "id-ID (titik ribuan: 1.500.000, koma desimal: 37,5)"
+    },
+    "branches": [
+      {
+        "id": "br-pahlawan-trip",
+        "name": "Pahlawan Trip (Malang)",
+        "code": "PTM",
+        "lat": -7.9688,
+        "lng": 112.6255,
+        "radius_meters": 10
+      },
+      {
+        "id": "br-el-pico",
+        "name": "El Pico (Batu)",
+        "code": "EPB",
+        "lat": -7.8833,
+        "lng": 112.5278,
+        "radius_meters": 10
+      }
+    ],
+    "segments": ["Depan (Service/Cashier)", "Bar (Beverage)", "Dapur (Kitchen/Cook)", "BackOffice (Admin/Finance/HR)"],
+    "roles": [
+      "Management (Owner/Director)",
+      "HRD (People & Culture)",
+      "Accounting (Payroll & Finance)",
+      "Purchasing (Inventory/Procurement)",
+      "SPV / Outlet Manager",
+      "PIC Segmen (PIC Depan, PIC Bar, PIC Dapur)",
+      "Staff (Server, Barista, Cook, Steward)"
+    ]
+  },
+  "architecture_and_navigation": {
+    "structure_choice": "Hybrid Dual-Shell: Mobile-first bottom bar shell for floor staff/PICs and collapsible vertical sidebar layout for tablet/desktop management & backoffice.",
+    "tradeoff_vs_alternative": "Compared against a single universal desktop-first layout with responsive scaling: A dedicated mobile bottom-nav shell (Home, Absensi, Jadwal, Request, Profil) avoids crammed 12-column dashboards for busy kitchen/bar staff on phone screens while giving Management full multi-branch command views with 256px collapsible sidebar on desktop.",
+    "desktop_navigation": {
+      "type": "collapsible_sidebar",
+      "width": "w-64 (256px) collapsed to w-16 (64px)",
+      "sections": [
+        {
+          "title": "Operasional Harian",
+          "items": [
+            { "label": "Dashboard Segmen", "icon": "LayoutDashboard", "path": "/dashboard" },
+            { "label": "Laporan Harian PIC", "icon": "ClipboardCheck", "path": "/laporan-harian", "badge": "Wajib 22:00" },
+            { "label": "Task & Proyek", "icon": "CheckSquare", "path": "/tasks" },
+            { "label": "Pengumuman", "icon": "Megaphone", "path": "/announcements" }
+          ]
+        },
+        {
+          "title": "SDM & Kehadiran",
+          "items": [
+            { "label": "Presensi & Kiosk Master", "icon": "MapPin", "path": "/absensi" },
+            { "label": "Jadwal Shift (5 Shift)", "icon": "CalendarDays", "path": "/jadwal" },
+            { "label": "Persetujuan / Request", "icon": "Clock3", "path": "/requests", "badge": "Approval" },
+            { "label": "Penilaian KPI", "icon": "Award", "path": "/kpi" }
+          ]
+        },
+        {
+          "title": "Payroll & HRD",
+          "items": [
+            { "label": "Penggajian (Payroll)", "icon": "Banknote", "path": "/payroll" },
+            { "label": "Rekrutmen & Pelamar", "icon": "UserPlus", "path": "/recruitment" },
+            { "label": "Data Karyawan", "icon": "Users", "path": "/karyawan" },
+            { "label": "Pengaturan Cabang", "icon": "Building2", "path": "/cabang" }
+          ]
+        }
+      ]
+    },
+    "mobile_navigation": {
+      "type": "fixed_bottom_bar",
+      "items": [
+        { "label": "Beranda", "icon": "Home", "path": "/dashboard" },
+        { "label": "Absen", "icon": "Camera", "path": "/absensi/mobile", "primary_fab": true },
+        { "label": "Jadwal", "icon": "Calendar", "path": "/jadwal" },
+        { "label": "Ajukan", "icon": "FileText", "path": "/requests" },
+        { "label": "Profil", "icon": "User", "path": "/profil" }
+      ]
+    }
+  },
+  "visual_foundations": {
+    "direction_rationale": "Direction 1: Warm Culinary Slate & Energetic Amber/Terracotta. Combines clean modern SaaS utility with subtle warm hospitality tones that feel natural in high-tempo F&B environments (kitchen heat, coffee bar, dining room) while remaining high-contrast and legible in dark prep rooms or bright outdoor patios.",
+    "typography": {
+      "font_family_sans": "Plus Jakarta Sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "font_family_mono": "JetBrains Mono, Menlo, monospace",
+      "google_font_url": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+      "scale": {
+        "xs": { "size": "0.75rem", "line_height": "1rem", "tracking": "0" },
+        "sm": { "size": "0.875rem", "line_height": "1.25rem", "tracking": "0" },
+        "base": { "size": "1rem", "line_height": "1.5rem", "tracking": "0" },
+        "lg": { "size": "1.125rem", "line_height": "1.75rem", "tracking": "-0.01em" },
+        "xl": { "size": "1.25rem", "line_height": "1.75rem", "tracking": "-0.01em" },
+        "2xl": { "size": "1.5rem", "line_height": "2rem", "tracking": "-0.02em" }
+      },
+      "rules": "Internal app uses sans for all text including currency (IDR) and shift times with font-variant-numeric: tabular-nums. Monospace is reserved exclusively for device UUIDs, FaceID tokens, and kiosk pairing codes."
+    },
+    "oklch_colors": {
+      "light": {
+        "surface_background": "oklch(0.985 0.005 85)",
+        "surface_card": "oklch(1.0 0 0)",
+        "surface_card_muted": "oklch(0.965 0.008 85)",
+        "text_primary": "oklch(0.20 0.025 260)",
+        "text_secondary": "oklch(0.48 0.02 260)",
+        "brand_primary": "oklch(0.58 0.14 48)",
+        "brand_primary_contrast": "oklch(0.99 0 0)",
+        "border_subtle": "oklch(0.90 0.01 85)",
+        "status_success": "oklch(0.62 0.17 145)",
+        "status_warning": "oklch(0.72 0.12 75)",
+        "status_danger": "oklch(0.58 0.22 28)",
+        "status_info": "oklch(0.58 0.11 240)"
+      },
+      "dark": {
+        "surface_background": "oklch(0.14 0.015 260)",
+        "surface_card": "oklch(0.18 0.018 260)",
+        "surface_card_muted": "oklch(0.22 0.02 260)",
+        "text_primary": "oklch(0.96 0.005 85)",
+        "text_secondary": "oklch(0.70 0.015 260)",
+        "brand_primary": "oklch(0.65 0.15 48)",
+        "brand_primary_contrast": "oklch(0.12 0.015 260)",
+        "border_subtle": "oklch(0.26 0.02 260)",
+        "status_success": "oklch(0.68 0.16 145)",
+        "status_warning": "oklch(0.76 0.14 75)",
+        "status_danger": "oklch(0.64 0.21 28)",
+        "status_info": "oklch(0.65 0.12 240)"
+      }
+    },
+    "hsl_shadcn_theme": {
+      "root_light": {
+        "--background": "35 25% 98%",
+        "--foreground": "222 47% 11%",
+        "--card": "0 0% 100%",
+        "--card-foreground": "222 47% 11%",
+        "--popover": "0 0% 100%",
+        "--popover-foreground": "222 47% 11%",
+        "--primary": "24 92% 48%",
+        "--primary-foreground": "0 0% 100%",
+        "--secondary": "35 20% 94%",
+        "--secondary-foreground": "24 85% 30%",
+        "--muted": "35 15% 94%",
+        "--muted-foreground": "215 16% 47%",
+        "--accent": "35 25% 92%",
+        "--accent-foreground": "222 47% 11%",
+        "--destructive": "0 84% 60%",
+        "--destructive-foreground": "0 0% 100%",
+        "--border": "35 15% 88%",
+        "--input": "35 15% 88%",
+        "--ring": "24 92% 48%",
+        "--radius": "0.625rem"
+      },
+      "root_dark": {
+        "--background": "224 25% 10%",
+        "--foreground": "35 20% 96%",
+        "--card": "224 24% 13%",
+        "--card-foreground": "35 20% 96%",
+        "--popover": "224 24% 13%",
+        "--popover-foreground": "35 20% 96%",
+        "--primary": "24 95% 54%",
+        "--primary-foreground": "224 25% 10%",
+        "--secondary": "224 20% 18%",
+        "--secondary-foreground": "35 20% 96%",
+        "--muted": "224 20% 18%",
+        "--muted-foreground": "217 15% 65%",
+        "--accent": "224 20% 20%",
+        "--accent-foreground": "35 20% 96%",
+        "--destructive": "0 72% 51%",
+        "--destructive-foreground": "0 0% 100%",
+        "--border": "224 20% 22%",
+        "--input": "224 20% 22%",
+        "--ring": "24 95% 54%"
+      }
+    }
+  },
+  "core_workflows": [
+    {
+      "id": "wf-attendance-geofence",
+      "title": "Presensi Mobile Radius 10m & FaceID (1 Akun 1 HP)",
+      "trigger": "Karyawan tiba di lokasi resto (El Pico / Pahlawan Trip) menjelang jam shift.",
+      "steps": [
+        "1. Karyawan membuka layar 'Absen Sekarang' di HP terdaftar.",
+        "2. Aplikasi meminta izin Geolocation + Kamera dan memverifikasi Device ID unik tersimpan.",
+        "3. Sistem menghitung jarak Haversine ke koordinat cabang aktif (contoh: 6 meter dari titik pusat El Pico).",
+        "4. Indikator Geofence menyala HIJAU ('Dalam Radius 10m') jika <= 10m. Jika > 10m tombol Clock-In terkunci (DISABLED) berwarna abu-abu dengan badge jarak ('Jarak: 34m - Terlalu Jauh').",
+        "5. Kamera depan aktif: Karyawan menekan 'Ambil Foto & Masuk', Face verification menganalisis biometrik wajah.",
+        "6. Log tersimpan instan: Jam WIB, Foto selfie, status 'Tepat Waktu' / 'Terlambat X menit', koordinat GPS."
+      ],
+      "exception_handling": "Jika HP karyawan rusak/hilang, dialihkan ke HP Master Kiosk di outlet (PIN Supervisor diperlukan)."
+    },
+    {
+      "id": "wf-hp-master-kiosk",
+      "title": "Mode Kiosk HP Master Outlet",
+      "trigger": "Staff tidak membawa HP atau perangkat pribadi terkendala.",
+      "steps": [
+        "1. Tablet/HP Master di kasir/office berstatus 'Kiosk Restoran'.",
+        "2. Staff memilih nama / memasukkan NIK 4 digit.",
+        "3. Kamera HP Master memindai wajah karyawan.",
+        "4. Kiosk mencatat kehadiran dengan bendera 'Via HP Master (Pahlawan Trip)'."
+      ]
+    },
+    {
+      "id": "wf-daily-pic-report",
+      "title": "Laporan Harian PIC Wajib (Closing Flag)",
+      "trigger": "PIC Dapur, Bar, dan Depan wajib mengisi laporan operasional sebelum pukul 22:30 WIB.",
+      "steps": [
+        "1. PIC membuka form Laporan Harian: omzet shift, waste bahan, insiden komplain tamu, stok kritis.",
+        "2. Upload foto kebersihan area & checklist closing.",
+        "3. Menekan tombol 'Kirim Laporan Closing'.",
+        "4. Dashboard Manajemen langsung menghapus 'Red Flag: Laporan Dapur Belum Masuk' menjadi 'Lengkap Diserahkan 22:15 WIB'."
+      ]
+    },
+    {
+      "id": "wf-shift-scheduling",
+      "title": "Jadwal 5 Shift Grid Restoran",
+      "trigger": "SPV/Manager menyusun jadwal mingguan karyawan per segmen.",
+      "shifts": [
+        { "id": "S1", "name": "Pagi / Opening", "time": "08:00 - 16:00 WIB" },
+        { "id": "S2", "name": "Middle 1", "time": "11:00 - 19:00 WIB" },
+        { "id": "S3", "name": "Siang / Peak", "time": "13:00 - 21:00 WIB" },
+        { "id": "S4", "name": "Middle 2", "time": "15:00 - 23:00 WIB" },
+        { "id": "S5", "name": "Malam / Closing", "time": "16:00 - 24:00 / 00:30 WIB" }
+      ],
+      "rules": "Grid menampilkan karyawan x hari (Senin-Minggu). Conflict detection mencegah double booking atau shift malam beruntun tanpa jeda 12 jam."
+    },
+    {
+      "id": "wf-overtime-approval",
+      "title": "Lembur Blok 30 Menit & Approval Berjenjang",
+      "trigger": "Karyawan diminta extend saat peak season / weekend rush.",
+      "steps": [
+        "1. Pengajuan lembur dibulatkan otomatis ke blok kelipatan 30 menit (misal 60 min, 90 min, 120 min). Durasi < 30 menit tidak dihitung lembur.",
+        "2. Approval Jenjang 1: PIC Segmen (Dapur/Bar/Depan) memvalidasi urgensi.",
+        "3. Approval Jenjang 2: Outlet Manager menyetujui kuota budget lembur.",
+        "4. Masuk ke rekap Payroll otomatis sesuai rate lembur per jam."
+      ]
+    },
+    {
+      "id": "wf-payroll-generation",
+      "title": "Payroll Mingguan & Bulanan + Slip PDF",
+      "trigger": "Accounting & HRD memproses slip gaji reguler (Bulanan) atau part-timer/crew (Mingguan).",
+      "steps": [
+        "1. Pilih periode & cabang (contoh: El Pico - Periode 1-30 November).",
+        "2. Sistem otomatis mengagregasi kehadiran, jam lembur (blok 30m), potongan telat, dan reward performa KPI.",
+        "3. Review rincian gaji pokok, tunjangan jabatan, uang makan, insentif omzet, potongan BPJS/kasbon.",
+        "4. Tombol 'Generate Slip Gaji PDF' siap dicetak atau diunduh karyawan via portal staff."
+      ]
+    }
+  ],
+  "view_hierarchy": [
+    {
+      "id": "view-dashboard",
+      "title": "Dashboard Operasional Multi-Cabang",
+      "path": "/dashboard",
+      "audience": "Management, HRD, SPV, PIC Segmen",
+      "purpose": "Memantau kesehatan operasional real-time per cabang dan segmen serta menindaklanjuti red flags.",
+      "key_elements": [
+        "Branch switcher toggle: [Semua Cabang | Pahlawan Trip | El Pico]",
+        "Segment tabs: [Dapur | Bar | Depan | BackOffice]",
+        "Stat cards: Total Kehadiran Hari Ini (misal: 38/42 Hadir), Lembur Aktif (4 org), Request Menunggu Approval (3), Omzet Sementara (Rp 28.450.000)",
+        "Red Flag Banner: 'Peringatan: 1 Laporan Harian Dapur (Pahlawan Trip) Belum Diserahkan' dengan aksi cepat [Kirim Pengingat PIC] atau [Review Form]",
+        "Live Attendance Feed: Foto selfie presensi terkini dengan cap waktu WIB dan badge lokasi radius."
+      ]
+    },
+    {
+      "id": "view-mobile-attendance",
+      "title": "Layar Presensi Staff (Mobile-First)",
+      "path": "/absensi/mobile",
+      "audience": "Seluruh Staff & PIC",
+      "purpose": "Absensi masuk/keluar cepat dengan verifikasi radius 10 meter dan selfie kamera.",
+      "key_elements": [
+        "Header profil staff + nama cabang terdaftar + shift hari ini (contoh: Shift S1 Pagi: 08:00 - 16:00)",
+        "Geofence GPS Radar: Menampilkan peta mini / radar pulsasi, indikator jarak '6 meter dari Titik El Pico' (Status: HIJAU - Dalam Radius)",
+        "Viewfinder Kamera Wajah dengan bingkai oval untuk panduan FaceID",
+        "Tombol Utama: 'CLOCK IN SEKARANG' (Aktif jika radius <= 10m; DISABLED jika jarak > 10m dengan tooltip 'Dekati area resto < 10m')",
+        "Switch mode ke 'HP Master Kiosk' (memerlukan PIN otorisasi Supervisor)",
+        "Riwayat presensi 7 hari terakhir beserta status tepat waktu & blok lembur."
+      ]
+    },
+    {
+      "id": "view-schedule-grid",
+      "title": "Jadwal Shift Karyawan (5 Shift)",
+      "path": "/jadwal",
+      "audience": "SPV, Manager, HRD, Staff (Read-only)",
+      "purpose": "Menyusun dan melihat rotasi 5 shift harian untuk seluruh anggota tim per segmen.",
+      "key_elements": [
+        "Filter: Cabang, Segmen (Depan/Bar/Dapur), dan Periode Minggu",
+        "Grid matrix interaktif: Baris Karyawan x Kolom Hari (Senin - Minggu)",
+        "Pill shift berkode warna (S1 Pagi [Biru], S2 Mid 1 [Kuning], S3 Peak [Oranye], S4 Mid 2 [Ungu], S5 Closing [Merah Maroon], OFF [Abu-abu])",
+        "Aksi drag & drop atau modal edit cepat shift + tombol 'Export Excel/PDF' untuk print di mading dapur."
+      ]
+    },
+    {
+      "id": "view-requests-approval",
+      "title": "Persetujuan Request (PH / Cuti / Lembur)",
+      "path": "/requests",
+      "audience": "Staff (Pemohon), SPV/Manager/HRD (Approver)",
+      "purpose": "Mengajukan dan menyetujui izin Public Holiday (PH), cuti tahunan, sakit, dan lembur blok 30m.",
+      "key_elements": [
+        "Tab status: [Menunggu Approval | Disetujui | Ditolak]",
+        "Card pengajuan dengan timeline approval berjenjang (PIC Segmen -> Outlet Manager)",
+        "Form pengajuan lembur dengan slider/stepper kelipatan blok 30 menit (30, 60, 90, 120 menit)",
+        "Tombol aksi cepat bagi Manager: [Setujui] berwarna hijau brand, [Tolak dengan Catatan] dialog popover."
+      ]
+    },
+    {
+      "id": "view-payroll",
+      "title": "Penggajian & Slip Gaji PDF",
+      "path": "/payroll",
+      "audience": "Accounting, HRD, Management",
+      "purpose": "Menghitung gaji mingguan/bulanan, rincian lembur, dan mencetak slip gaji resmi.",
+      "key_elements": [
+        "Filter Tipe: [Bulanan (Staff Tetap/Kontrak) | Mingguan (Casual/Part-time)]",
+        "Tabel kalkulasi: NIK, Nama, Hari Masuk, Telat (Menit), Jam Lembur (Blok 30m), Gaji Pokok, Lembur, Tunjangan, Potongan, Total Diterima (IDR)",
+        "Preview slip gaji popover / drawer dengan layout slip resmi Resto (Logo, Cabang, Rincian, Tanda Tangan digital)",
+        "Tombol 'Unduh PDF Slip' dan 'Kirim ke WhatsApp Staff'."
+      ]
+    },
+    {
+      "id": "view-recruitment",
+      "title": "Rekrutmen & Job Portal Publik",
+      "path": "/recruitment",
+      "audience": "HRD, Management, Calon Pelamar Publik",
+      "purpose": "Mengelola pipeline pelamar kerja restoran dan halaman portal karir publik.",
+      "key_elements": [
+        "Toggle internal: [Kanban Pipeline | Job Listing Publik]",
+        "Kolom Kanban: [Lamaran Masuk -> Seleksi Berkas -> Tes Masak/Food Test & Trial -> Wawancara Manager -> Diterima / Onboarding]",
+        "Card pelamar: Posisi (Cook/Barista/Server), Pengalaman Resto, Cabang Pilihan, Nilai Trial, Quick Action WhatsApp",
+        "Link publik portal karir resto (/karir) yang ramah pelamar di smartphone."
+      ]
+    },
+    {
+      "id": "view-kpi",
+      "title": "Penilaian Kinerja KPI Berjenjang (Skala 1-5)",
+      "path": "/kpi",
+      "audience": "SPV, Manager, HRD",
+      "purpose": "Evaluasi kinerja berkala staf restoran dengan indikator standar F&B.",
+      "key_elements": [
+        "Form penilaian rating bintang 1-5 untuk kriteria: Kedisiplinan & Higienitas (Grooming), Kecepatan Penyajian (Speed of Service), Food/Beverage Waste Management, Kerjasama Tim & Hospitality",
+        "Ringkasan nilai rata-rata otomatis terhubung ke perhitungan bonus insentif payroll."
+      ]
+    },
+    {
+      "id": "view-tasks-and-announcements",
+      "title": "Task Operasional & Pengumuman Resto",
+      "path": "/tasks",
+      "audience": "Seluruh Tim Resto",
+      "purpose": "Manajemen checklist opening/closing harian, deep cleaning mingguan, serta pengumuman penting.",
+      "key_elements": [
+        "Tampilan Tiga Mode: Kanban Board, Daftar List Checklist, dan Kalender Operasional",
+        "Feed Pengumuman Manajemen: SOP Menu Baru, Jadwal General Cleaning, Target Omzet Bulanan."
+      ]
+    },
+    {
+      "id": "view-branch-settings",
+      "title": "Pengaturan Cabang & Geofence Map",
+      "path": "/cabang",
+      "audience": "Management, HRD",
+      "purpose": "Menentukan koordinat GPS cabang dan radius absensi di peta interaktif.",
+      "key_elements": [
+        "Peta Leaflet interaktif dengan pin lokasi cabang (El Pico Batu, Pahlawan Trip Malang)",
+        "Lingkaran geofence visual beradius 10 meter",
+        "Input presisi koordinat latitude/longitude dan toleransi GPS device."
+      ]
+    }
+  ],
+  "component_styling_rules": {
+    "cards": "bg-card text-card-foreground border border-border/80 shadow-xs rounded-xl p-4 sm:p-5 transition-all duration-200",
+    "status_badges": {
+      "on_time": "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1",
+      "late": "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 font-medium px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1",
+      "outside_radius": "bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 font-medium px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1",
+      "pending": "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-medium px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1",
+      "approved": "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium px-2.5 py-0.5 rounded-full text-xs inline-flex items-center gap-1"
+    },
+    "buttons": {
+      "primary": "bg-primary text-primary-foreground font-semibold px-4 py-2.5 rounded-lg shadow-sm hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none",
+      "secondary": "bg-secondary text-secondary-foreground font-medium px-4 py-2.5 rounded-lg border border-border hover:bg-muted active:scale-[0.98] transition-all",
+      "destructive": "bg-destructive text-destructive-foreground font-semibold px-4 py-2.5 rounded-lg hover:opacity-90 active:scale-[0.98] transition-all",
+      "kiosk_clockin": "h-14 w-full text-lg font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+    },
+    "data_tables": "w-full border-collapse text-sm text-left [&_th]:h-11 [&_th]:px-4 [&_th]:text-xs [&_th]:font-semibold [&_th]:text-muted-foreground [&_th]:bg-muted/50 [&_td]:p-4 [&_td]:border-b [&_td]:border-border/60 [&_tr:hover]:bg-muted/30 tabular-nums"
+  },
+  "feedback_and_states": {
+    "loading": "Skeleton shimmer dengan tinggi konsisten untuk tabel jadwal dan kartu statistik.",
+    "empty_state": "Ikon ilustratif abu-abu + heading ramah bahasa Indonesia + CTA tindakan pertama (misal: 'Belum ada pengajuan cuti minggu ini').",
+    "geofence_error": "Peringatan visual merah: 'Anda berada di luar radius 10m (Jarak saat ini: 42m). Dekati pintu masuk El Pico untuk melakukan presensi.'",
+    "kiosk_paired": "Lencana hijau cerah: 'Kiosk Aktif: HP Master Pahlawan Trip (Kasir 1)'."
+  }
+}
